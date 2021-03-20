@@ -1,13 +1,15 @@
 package com.spring.onistore.model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @Column(name = "p_id")
+    private long productId;
 
     @Column(name = "p_name", nullable = false)
     private String productName;
@@ -15,15 +17,19 @@ public class Product {
     @Column(name = "p_description", nullable = true)
     private String productDescription;
 
-    @Column(name = "slug", nullable = false)
-    private String slug;
+    @Column(name = "p_slug", nullable = false)
+    private String productSlug;
 
-    public long getId() {
-        return id;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "product_categories", schema = "dbo", joinColumns = {@JoinColumn(referencedColumnName = "p_id")}, inverseJoinColumns = {@JoinColumn(referencedColumnName = "c_id")})
+    private Set<Category> categories;
+
+    public long getProductId() {
+        return productId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setProductId(long productId) {
+        this.productId = productId;
     }
 
     public String getProductName() {
@@ -42,11 +48,19 @@ public class Product {
         this.productDescription = productDescription;
     }
 
-    public String getSlug() {
-        return slug;
+    public String getProductSlug() {
+        return productSlug;
     }
 
-    public void setSlug(String slug) {
-        this.slug = slug;
+    public void setProductSlug(String productSlug) {
+        this.productSlug = productSlug;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
