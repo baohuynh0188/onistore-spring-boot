@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.spring.onistore.util.Slugify.toSlug;
+
 @RestController
 @RequestMapping("api")
 public class ProductController {
@@ -31,10 +33,19 @@ public class ProductController {
         return ResponseEntity.ok().body(product);
     }
 
+//    // Create one product
+//    @PostMapping("product/add")
+//    public Product createProduct(@Validated @RequestBody Product product) {
+//        product.setSlug(toSlug(product.getProductName()));
+//        return productRepository.save(product);
+//    }
+
     // Create one product
     @PostMapping("product/add")
-    public Product createProduct(@Validated @RequestBody Product product) {
-        return productRepository.save(product);
+    public ResponseEntity<Product> createProduct(@Validated @RequestBody Product product) {
+        product.setSlug(toSlug(product.getProductName()));
+        Product saveProduct = productRepository.save(product);
+        return ResponseEntity.ok().body(saveProduct);
     }
 
     // Delete one product
@@ -55,5 +66,12 @@ public class ProductController {
         product.setProductDescription(productDetail.getProductDescription());
         final Product productUpdated = productRepository.save(product);
         return ResponseEntity.ok().body(productUpdated);
+    }
+
+    @PostMapping("test")
+    public ResponseEntity<Product> test(@RequestBody Product a) {
+//        Product ab = new Product();
+        System.out.println(a.getProductName());
+        return  ResponseEntity.ok().body(a);
     }
 }

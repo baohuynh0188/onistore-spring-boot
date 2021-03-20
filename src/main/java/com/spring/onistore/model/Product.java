@@ -15,6 +15,9 @@ public class Product {
     @Column(name = "p_description", nullable = true)
     private String productDescription;
 
+    @Column(name = "slug", nullable = false)
+    private String slug;
+
     public long getId() {
         return id;
     }
@@ -37,5 +40,13 @@ public class Product {
 
     public void setProductDescription(String productDescription) {
         this.productDescription = productDescription;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 }
