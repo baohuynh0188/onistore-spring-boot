@@ -2,10 +2,9 @@ package com.spring.onistore.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class UserDto {
+public class SignUpDto {
 
     @Email
     private String email;
@@ -13,10 +12,10 @@ public class UserDto {
     @Size(min = 6, max = 36)
     private String userName;
     @NotBlank
-    @Size(message = "Password must have at least 6 characters")
+    @Size(min = 6, max = 128)
     private String password;
 
-    public UserDto() {
+    public SignUpDto() {
     }
 
     public String getEmail() {
