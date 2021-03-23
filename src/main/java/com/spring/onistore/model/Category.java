@@ -1,58 +1,66 @@
-// package com.spring.onistore.model;
+package com.spring.onistore.model;
 
-// import javax.persistence.*;
-// import java.util.Set;
+import java.util.Set;
 
-// @Entity
-// @Table(name = "categories")
-// public class Category {
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-// @Id
-// @GeneratedValue(strategy = GenerationType.AUTO)
-// @Column(name = "c_id")
-// private long categoryId;
+@Entity
+@Table(name = "categories")
+public class Category {
 
-// @Column(name = "c_name", nullable = false)
-// private String categoryName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "c_id")
+    private long categoryId;
 
-// @Column(name = "c_description", nullable = false)
-// private String categoryDescription;
+    @Column(name = "c_name", nullable = false)
+    private String categoryName;
 
-// @Column(name = "c_slug", nullable = false)
-// private String categorySlug;
+    @Column(name = "c_description", nullable = false)
+    private String categoryDescription;
 
-// @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
-// private Set<Product> products;
+    @Column(name = "c_slug", nullable = false)
+    private String categorySlug;
 
-// public long getCategoryId() {
-// return categoryId;
-// }
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "categories")
+    private Set<Product> products;
 
-// public void setCategoryId(long categoryId) {
-// this.categoryId = categoryId;
-// }
+    public long getCategoryId() {
+        return categoryId;
+    }
 
-// public String getCategoryName() {
-// return categoryName;
-// }
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
+    }
 
-// public void setCategoryName(String categoryName) {
-// this.categoryName = categoryName;
-// }
+    public String getCategoryName() {
+        return categoryName;
+    }
 
-// public String getCategoryDescription() {
-// return categoryDescription;
-// }
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
-// public void setCategoryDescription(String categoryDescription) {
-// this.categoryDescription = categoryDescription;
-// }
+    public String getCategoryDescription() {
+        return categoryDescription;
+    }
 
-// public String getCategorySlug() {
-// return categorySlug;
-// }
+    public void setCategoryDescription(String categoryDescription) {
+        this.categoryDescription = categoryDescription;
+    }
 
-// public void setCategorySlug(String categorySlug) {
-// this.categorySlug = categorySlug;
-// }
-// }
+    public String getCategorySlug() {
+        return categorySlug;
+    }
+
+    public void setCategorySlug(String categorySlug) {
+        this.categorySlug = categorySlug;
+    }
+}

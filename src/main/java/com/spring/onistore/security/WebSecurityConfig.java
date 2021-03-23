@@ -3,8 +3,8 @@ package com.spring.onistore.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,12 +25,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter JwtRequestFilter;
 
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        //
         auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
-
     }
 
     @Bean
@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
@@ -47,10 +47,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/api/v2/users/signup").permitAll().antMatchers("/api/v2/users/signin")
-                .permitAll().and().antMatcher("/api/v2/users").authorizeRequests().anyRequest().authenticated().and()
-                .exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/v2/users/signin").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v2/users/signup").permitAll().anyRequest().authenticated().and()
+                .cors().and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable();
         http.addFilterBefore(JwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 
 }

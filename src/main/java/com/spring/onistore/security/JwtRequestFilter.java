@@ -7,8 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.spring.onistore.model.User;
-import com.spring.onistore.repository.UserRepository;
 import com.spring.onistore.services.UserDetailsServiceImpl;
 import com.spring.onistore.util.JwtUtil;
 
@@ -27,9 +25,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private JwtUtil jwtUtil;

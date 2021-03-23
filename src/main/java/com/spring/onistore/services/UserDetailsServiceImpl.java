@@ -1,7 +1,6 @@
 package com.spring.onistore.services;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.spring.onistore.model.User;
 // import com.spring.onistore.repository.AppRoleRepository;
@@ -9,7 +8,6 @@ import com.spring.onistore.model.User;
 import com.spring.onistore.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
