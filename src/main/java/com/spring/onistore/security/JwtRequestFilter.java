@@ -32,6 +32,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
+        // !IMPORTANT
+        // This shit not gonna work if you uncomment these code
+
+        // response.addHeader("Access-Control-Allow-Origin",
+        // request.getHeader("Origin"));
+        // response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE");
+        // response.setHeader("Access-Control-Allow-Credentials", "true");
+        // response.setHeader("Access-Control-Allow-Headers",
+        // "content-type, x-gwt-module-base, x-gwt-permutation, clientid, longpush");
+
         final String requestTokenHeader = request.getHeader("Authorization");
 
         String email = null;

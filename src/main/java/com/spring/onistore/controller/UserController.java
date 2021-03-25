@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,7 +61,6 @@ public class UserController {
         // TODO: process POST request
         HashMap<String, String> error = new HashMap<>();
         User foundUser = userRepository.findByEmail(signInDto.getEmail());
-        System.out.println(signInDto.getPassword());
         if (foundUser == null) {
             error.put("message", "User not found");
             return new ResponseEntity<>(error, HttpStatus.valueOf(401));
