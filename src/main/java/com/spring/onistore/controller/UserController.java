@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping
-    public String home() {
+    public String get() {
         return "Hello";
     }
 
