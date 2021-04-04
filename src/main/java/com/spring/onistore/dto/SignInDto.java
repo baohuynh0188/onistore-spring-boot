@@ -1,8 +1,11 @@
 package com.spring.onistore.dto;
 
 public class SignInDto {
+
     private String email;
+
     private String userName;
+
     private String password;
 
     public SignInDto() {

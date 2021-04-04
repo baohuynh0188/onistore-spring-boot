@@ -2,7 +2,7 @@ package com.spring.onistore.services;
 
 import java.util.ArrayList;
 
-import com.spring.onistore.model.User;
+import com.spring.onistore.entity.User;
 // import com.spring.onistore.repository.AppRoleRepository;
 // import com.spring.onistore.repository.AppUserRepository;
 import com.spring.onistore.repository.UserRepository;

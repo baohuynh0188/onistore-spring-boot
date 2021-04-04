@@ -47,8 +47,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/api/v2/users/signin").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v2/signup").permitAll().anyRequest().authenticated().and().cors()
+        http.csrf().disable().authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/users/signin").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/products").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/categories").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/signup").permitAll()
+                .anyRequest().authenticated().and().cors()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable();
         http.addFilterBefore(JwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

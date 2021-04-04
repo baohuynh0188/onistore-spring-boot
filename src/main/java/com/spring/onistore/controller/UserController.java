@@ -6,7 +6,7 @@ import javax.validation.Valid;
 
 import com.spring.onistore.dto.SignInDto;
 import com.spring.onistore.dto.SignUpDto;
-import com.spring.onistore.model.User;
+import com.spring.onistore.entity.User;
 import com.spring.onistore.repository.UserRepository;
 import com.spring.onistore.util.JwtUtil;
 
@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Validated
-@RequestMapping("api/v2/users")
+@RequestMapping("api/users")
 public class UserController {
 
     @Autowired
@@ -81,7 +80,7 @@ public class UserController {
 
     @GetMapping("/protect")
     public String test() {
-        return "This is protectd";
+        return "This is protected";
     }
 
 }
