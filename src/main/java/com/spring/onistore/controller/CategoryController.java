@@ -26,9 +26,9 @@ public class CategoryController {
 
     // Get products by category slug
     @GetMapping("{category_slug}")
-    public ResponseEntity<List<Category>> getCategoryBySlug(@PathVariable(value = "category_slug") String categorySlug)
+    public ResponseEntity<Category> getCategoryBySlug(@PathVariable(value = "category_slug") String categorySlug)
             throws ResourceNotFoundException {
-        List<Category> categories = categoryRepository.findBySlug(categorySlug);
+        Category categories = categoryRepository.findBySlug(categorySlug);
         return ResponseEntity.ok().body(categories);
     }
 
