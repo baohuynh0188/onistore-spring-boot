@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Validated
-@RequestMapping("api/users")
+@RequestMapping("api")
+@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -58,29 +60,33 @@ public class UserController {
     @PostMapping("/signin")
     public ResponseEntity<?> postMethodName(@RequestBody SignInDto signInDto) {
         // TODO: process POST request
-        HashMap<String, String> error = new HashMap<>();
-        User foundUser = userRepository.findByEmail(signInDto.getEmail());
+        HashMap<String, String> message = new HashMap<>();
+        System.out.println(signInDto.getUsername());
+        System.out.print(signInDto.getUsername());
+        User foundUser = userRepository.findByUserName(signInDto.getUsername());
         if (foundUser == null) {
-            error.put("message", "User not found");
-            return new ResponseEntity<>(error, HttpStatus.valueOf(401));
+            message.put("message", "User not found");
+            return new ResponseEntity<>(message, HttpStatus.valueOf(401));
         }
 
         if (!encoder().matches(signInDto.getPassword(), foundUser.getEncryptedPassword())) {
-            error.put("message", "Wrong email or password");
-            return new ResponseEntity<>(error, HttpStatus.valueOf(401));
+            message.put("message", "Wrong email or password");
+            return new ResponseEntity<>(message, HttpStatus.valueOf(401));
         }
         JwtUtil jwtUtil = new JwtUtil();
 
         String token = jwtUtil.generateToken(foundUser);
 
-        error.put("accessToken", token);
+        message.put("token", token);
 
-        return ResponseEntity.ok().body(error);
+        return ResponseEntity.ok().body(message);
     }
 
-    @GetMapping("/protect")
-    public String test() {
-        return "This is protected";
+    @GetMapping("/admin/auth")
+    public ResponseEntity<?> auth() {
+        HashMap<String, String> message = new HashMap<>();
+        message.put("message", "Authenticated");
+        return ResponseEntity.ok().body(message);
     }
 
 }

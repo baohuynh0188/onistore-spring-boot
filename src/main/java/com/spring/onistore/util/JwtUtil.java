@@ -19,12 +19,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtUtil implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
 
-    public static final long JWT_TOKEN_VALIDITY = 1000 * 10;
+    public static final long JWT_TOKEN_VALIDITY = 1000 * 10 * 3600; // 1 hour
 
     String secretString = "tHiSiSaVeRySeCrEcTsTrIng";
 
     // retrieve username from jwt token
-    public String getEmailFromToken(String token) {
+    public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -52,7 +52,7 @@ public class JwtUtil implements Serializable {
     // generate token for user
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, user.getEmail());
+        return doGenerateToken(claims, user.getUserName());
     }
 
     // while creating the token -
@@ -64,13 +64,13 @@ public class JwtUtil implements Serializable {
     private String doGenerateToken(Map<String, Object> claims, String subject) {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
                 .signWith(SignatureAlgorithm.HS512, secretString).compact();
     }
 
     // validate token
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getEmailFromToken(token);
+        final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }

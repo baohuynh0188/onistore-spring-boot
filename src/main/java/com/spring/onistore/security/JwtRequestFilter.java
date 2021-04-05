@@ -33,26 +33,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        // !IMPORTANT
-        // This shit not gonna work if you uncomment these code
-
-        // response.addHeader("Access-Control-Allow-Origin",
-        // request.getHeader("Origin"));
-        // response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE");
-        // response.setHeader("Access-Control-Allow-Credentials", "true");
-        // response.setHeader("Access-Control-Allow-Headers",
-        // "content-type, x-gwt-module-base, x-gwt-permutation, clientid, longpush");
-
         final String requestTokenHeader = request.getHeader("Authorization");
 
-        String email = null;
+        String username = null;
         String jwtToken = null;
         // JWT Token is in the form "Bearer token". Remove Bearer word and get
         // only the Token
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {
-                email = jwtUtil.getEmailFromToken(jwtToken);
+                username = jwtUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
                 System.out.println("Unable to get JWT Token");
             } catch (ExpiredJwtException e) {
@@ -63,9 +53,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         // Once we get the token validate it.
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(email);
+            UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
 
             // if token is valid configure Spring Security to manually set
             // authentication

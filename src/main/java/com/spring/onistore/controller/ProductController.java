@@ -18,18 +18,19 @@ import static com.spring.onistore.util.Slugify.toSlug;
 
 @RestController
 @RequestMapping("api/products")
+@CrossOrigin
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
     // Show all products
-//    @GetMapping("")
-//    public ResponseEntity<List<Product>> getAllProducts() {
-//        int count = productRepository.findAll().size();
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add("X-Total-Count", String.valueOf(count));
-//        return new ResponseEntity;
-//    }
+    // @GetMapping("")
+    // public ResponseEntity<List<Product>> getAllProducts() {
+    // int count = productRepository.findAll().size();
+    // HttpHeaders httpHeaders = new HttpHeaders();
+    // httpHeaders.add("X-Total-Count", String.valueOf(count));
+    // return new ResponseEntity;
+    // }
 
     @GetMapping("")
     public List<Product> getAllProducts() {
@@ -38,7 +39,8 @@ public class ProductController {
 
     // Get products by product name
     @GetMapping("{product_slug}")
-    public ResponseEntity<?> getProductBySlug(@PathVariable(value = "product_slug") String productSlug) throws ResourceNotFoundException {
+    public ResponseEntity<?> getProductBySlug(@PathVariable(value = "product_slug") String productSlug)
+            throws ResourceNotFoundException {
         Optional<Product> product = productRepository.findBySlug(productSlug);
         if (product.isEmpty()) {
             Map<String, String> map = new HashMap<>();
@@ -59,9 +61,10 @@ public class ProductController {
 
     // Delete one product
     @DeleteMapping("{id}")
-    public Map<String, Boolean> deleteProduct(@PathVariable(value = "id") Long productId) throws ResourceNotFoundException {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new
-                ResourceNotFoundException("Product" + productId + "is not exist"));
+    public Map<String, Boolean> deleteProduct(@PathVariable(value = "id") Long productId)
+            throws ResourceNotFoundException {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product" + productId + "is not exist"));
         productRepository.delete(product);
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
@@ -70,8 +73,10 @@ public class ProductController {
 
     // Update product
     @PutMapping("{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable(value = "id") Long productId, @Validated @RequestBody Product productDetail) throws ResourceNotFoundException {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product" + productId + "is not exist"));
+    public ResponseEntity<Product> updateProduct(@PathVariable(value = "id") Long productId,
+            @Validated @RequestBody Product productDetail) throws ResourceNotFoundException {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product" + productId + "is not exist"));
         product.setName(productDetail.getName());
         product.setDescription(productDetail.getDescription());
         product.setSlug(toSlug(productDetail.getName()));

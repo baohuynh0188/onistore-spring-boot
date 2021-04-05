@@ -4,7 +4,7 @@ public class SignInDto {
 
     private String email;
 
-    private String userName;
+    private String username;
 
     private String password;
 
@@ -19,12 +19,12 @@ public class SignInDto {
         this.password = password;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getEmail() {
