@@ -4,6 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import net.bytebuddy.implementation.bind.annotation.Default;
+
 import java.util.Set;
 
 @Entity
@@ -23,6 +26,9 @@ public class User {
     @Column(name = "username", length = 36, unique = true)
     @NotBlank
     private String userName;
+
+    @Column(name = "isAdmin", columnDefinition = "tinyint(1) default true")
+    private Boolean isAdmin;
 
     @Column(name = "encrypted_password", length = 128)
     @NotBlank
@@ -68,6 +74,10 @@ public class User {
 
     public void setEncryptedPassword(String encryptedPassword) {
         this.encryptedPassword = encryptedPassword;
+    }
+
+    public Boolean getIsAdmin() {
+        return this.isAdmin;
     }
 
     public Set<Comment> getComments() {

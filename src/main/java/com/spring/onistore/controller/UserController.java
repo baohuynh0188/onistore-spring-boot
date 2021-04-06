@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Validated
 @RequestMapping("api")
-@CrossOrigin
+// @CrossOrigin
 public class UserController {
 
     @Autowired
@@ -36,11 +35,6 @@ public class UserController {
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @GetMapping
-    public String get() {
-        return "Hello";
     }
 
     @PostMapping("/signup")
@@ -61,8 +55,6 @@ public class UserController {
     public ResponseEntity<?> postMethodName(@RequestBody SignInDto signInDto) {
         // TODO: process POST request
         HashMap<String, String> message = new HashMap<>();
-        System.out.println(signInDto.getUsername());
-        System.out.print(signInDto.getUsername());
         User foundUser = userRepository.findByUserName(signInDto.getUsername());
         if (foundUser == null) {
             message.put("message", "User not found");
@@ -86,6 +78,13 @@ public class UserController {
     public ResponseEntity<?> auth() {
         HashMap<String, String> message = new HashMap<>();
         message.put("message", "Authenticated");
+        return ResponseEntity.ok().body(message);
+    }
+
+    @GetMapping("/roles")
+    public ResponseEntity<?> roles() {
+        HashMap<String, String> message = new HashMap<>();
+        message.put("message", "Authorize");
         return ResponseEntity.ok().body(message);
     }
 

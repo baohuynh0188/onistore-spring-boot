@@ -4,6 +4,7 @@ import com.spring.onistore.entity.Product;
 import com.spring.onistore.exception.ResourceNotFoundException;
 import com.spring.onistore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,17 +25,14 @@ public class ProductController {
     private ProductRepository productRepository;
 
     // Show all products
-    // @GetMapping("")
-    // public ResponseEntity<List<Product>> getAllProducts() {
-    // int count = productRepository.findAll().size();
-    // HttpHeaders httpHeaders = new HttpHeaders();
-    // httpHeaders.add("X-Total-Count", String.valueOf(count));
-    // return new ResponseEntity;
-    // }
-
     @GetMapping("")
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    @CrossOrigin("http://localhost:3006")
+    public ResponseEntity<List<Product>> getAllProducts() {
+        int count = productRepository.findAll().size();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Access-Control-Expose-Headers", "X-Total-Count");
+        httpHeaders.add("X-Total-Count", String.valueOf(count));
+        return ResponseEntity.ok().headers(httpHeaders).body(productRepository.findAll());
     }
 
     // Get products by product name
