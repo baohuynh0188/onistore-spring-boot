@@ -1,5 +1,7 @@
 package com.spring.onistore.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,7 @@ public class ProductCategory {
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Product product;
 
     @ManyToOne

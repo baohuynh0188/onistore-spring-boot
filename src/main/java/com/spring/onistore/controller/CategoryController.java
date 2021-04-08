@@ -2,6 +2,7 @@ package com.spring.onistore.controller;
 
 import com.spring.onistore.entity.Category;
 import com.spring.onistore.exception.ResourceNotFoundException;
+import com.spring.onistore.repository.CategoryProductRepository;
 import com.spring.onistore.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

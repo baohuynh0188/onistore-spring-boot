@@ -1,5 +1,6 @@
 package com.spring.onistore.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -34,6 +35,7 @@ public class Category {
     private Date updatedAt;
 
     @OneToMany(mappedBy = "category")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<ProductCategory> productCategories;
 
     public Long getId() {

@@ -8,76 +8,23 @@ import java.util.Set;
 
 public class CategoryDto implements Serializable {
 
-    private long id;
+    private Long product_id;
 
-    private String name;
+    private Long category_id;
 
-    private String description;
-
-    private String slug;
-
-    private Date createdAt;
-
-    private Date updatedAt;
-
-    private Set<ProductCategory> productCategories;
-
-    public CategoryDto() {
+    public Long getProduct_id() {
+        return product_id;
     }
 
-    public long getId() {
-        return id;
+    public void setProduct_id(Long product_id) {
+        this.product_id = product_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Long getCategory_id() {
+        return category_id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public Set<ProductCategory> getProductCategories() {
-        return productCategories;
-    }
-
-    public void setProductCategories(Set<ProductCategory> productCategories) {
-        this.productCategories = productCategories;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setCategory_id(Long category_id) {
+        this.category_id = category_id;
     }
 }
