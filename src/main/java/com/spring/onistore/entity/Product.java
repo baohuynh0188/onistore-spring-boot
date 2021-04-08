@@ -5,6 +5,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,8 +22,15 @@ public class Product {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "amount", nullable = false)
-    private Double amount;
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
+
+    @Column(name = "price", nullable = false)
+    private Double price;
+
+    @Column(name = "fake_price", nullable = false)
+    private Double fakePrice;
+
 
     @Column(name = "slug", nullable = false)
     private String slug;
@@ -47,6 +55,34 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Rating> ratings;
 
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<OrderProduct> orderProducts;
+
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Double getFakePrice() {
+        return fakePrice;
+    }
+
+    public void setFakePrice(Double fakePrice) {
+        this.fakePrice = fakePrice;
+    }
+
     public Long getId() {
         return id;
     }
@@ -69,14 +105,6 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
     }
 
     public String getSlug() {
@@ -133,5 +161,14 @@ public class Product {
 
     public void setRatings(Set<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+
+    public Set<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(Set<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 }
