@@ -5,7 +5,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -56,7 +55,7 @@ public class Product {
     private Set<Rating> ratings;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<OrderProduct> orderProducts;
+    private Set<OrderDetails> orderDetails;
 
 
     public int getQuantity() {
@@ -164,11 +163,11 @@ public class Product {
     }
 
 
-    public Set<OrderProduct> getOrderProducts() {
-        return orderProducts;
+    public Set<OrderDetails> getOrderProducts() {
+        return orderDetails;
     }
 
-    public void setOrderProducts(Set<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
+    public void setOrderProducts(Set<OrderDetails> orderDetails) {
+        this.orderDetails = orderDetails;
     }
 }

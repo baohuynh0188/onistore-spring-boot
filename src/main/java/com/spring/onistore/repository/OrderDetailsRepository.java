@@ -1,10 +1,10 @@
 package com.spring.onistore.repository;
 
-import com.spring.onistore.entity.OrderProduct;
+import com.spring.onistore.entity.OrderDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrderProductRepository extends JpaRepository<OrderProduct, Integer> {
+public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long> {
 
 }

@@ -1,6 +1,5 @@
 package com.spring.onistore.controller;
 
-
 import com.spring.onistore.entity.Order;
 import com.spring.onistore.exception.ResourceNotFoundException;
 import com.spring.onistore.repository.OrderRepository;
@@ -19,7 +18,6 @@ import java.util.Optional;
 @CrossOrigin
 public class OrderController {
 
-
     @Autowired
     private OrderRepository orderRepository;
 
@@ -28,9 +26,8 @@ public class OrderController {
         return orderRepository.findAll();
     }
 
-
     @GetMapping("{id}")
-    public ResponseEntity<?> getOrderById(@PathVariable(value = "id") Integer orderId)
+    public ResponseEntity<?> getOrderById(@PathVariable(value = "id") Long orderId)
             throws ResourceNotFoundException {
         Optional<Order> order = orderRepository.findById(orderId);
         if (order.isEmpty()) {
@@ -41,11 +38,6 @@ public class OrderController {
             return ResponseEntity.ok().body(order.get());
         }
     }
-
-
-
-
-
 
 
 }

@@ -1,27 +1,28 @@
 package com.spring.onistore.entity;
 
-import com.spring.onistore.models.OrderProductId;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "order_product")
-public class OrderProduct{
+@Table(name = "order_details")
+public class OrderDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JoinColumn(name = "product_id")
     private Product product;
 
@@ -86,11 +87,11 @@ public class OrderProduct{
         this.updatedAt = updatedAt;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -98,7 +99,7 @@ public class OrderProduct{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderProduct that = (OrderProduct) o;
+        OrderDetails that = (OrderDetails) o;
         return id == that.id && quantity == that.quantity && Double.compare(that.price, price) == 0 && Objects.equals(order, that.order) && Objects.equals(product, that.product) && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
     }
 

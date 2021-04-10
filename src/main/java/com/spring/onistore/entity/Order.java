@@ -6,7 +6,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,7 +14,9 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+
+    private String name;
 
     private String email;
 
@@ -39,15 +40,39 @@ public class Order {
     private User user;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<OrderProduct> orderProducts;
+    private Set<OrderDetails> orderDetails;
 
 
-    public int getId() {
+    public Order() {
+    }
+
+    public Order(Long id, String name, String email, String phone, String address, String note, Date createdAt, Date updatedAt, User user, Set<OrderDetails> orderDetails) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.note = note;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.user = user;
+        this.orderDetails = orderDetails;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -106,11 +131,14 @@ public class Order {
         this.user = user;
     }
 
-    public Set<OrderProduct> getOrderProducts() {
-        return orderProducts;
+    public Set<OrderDetails> getOrderProducts() {
+        return orderDetails;
     }
 
-    public void setOrderProducts(Set<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
+    public void setOrderProducts(Set<OrderDetails> orderDetails) {
+        this.orderDetails = orderDetails;
     }
+
+
+
 }
