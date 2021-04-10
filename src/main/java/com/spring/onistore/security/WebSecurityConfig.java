@@ -47,12 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/api/signin").permitAll()
+        http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, "/api/signup").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/signin").permitAll().antMatchers(HttpMethod.GET, "/api/products")
+                .permitAll().antMatchers(HttpMethod.GET, "/api/products/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/admin/auth").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/roles").hasAnyAuthority("USER, ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/products").permitAll().antMatchers(HttpMethod.GET, "/api/categories")
-                .permitAll().antMatchers(HttpMethod.POST, "/api/signup").permitAll().anyRequest().authenticated().and()
-                .cors().and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                .antMatchers(HttpMethod.GET, "/api/categories").permitAll().anyRequest().authenticated().and().cors()
+                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable();
         http.addFilterBefore(JwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
