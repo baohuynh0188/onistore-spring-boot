@@ -29,7 +29,7 @@ public class OrderController {
     }
 
 
-    @GetMapping("")
+    @GetMapping("{id}")
     public ResponseEntity<?> getOrderById(@PathVariable(value = "id") Integer orderId)
             throws ResourceNotFoundException {
         Optional<Order> order = orderRepository.findById(orderId);
@@ -41,6 +41,8 @@ public class OrderController {
             return ResponseEntity.ok().body(order.get());
         }
     }
+
+
 
 
 
