@@ -32,7 +32,6 @@ public class CategoryProductController {
     @GetMapping("")
     public Map<String, List<?>> addCategoryProduct() {
         List<Category> category = categoryRepository.findAll();
-        Category category1 = new Category();
         List<Product> products = productRepository.findAll();
         Map<String, List<?>> map = new HashMap<>();
         map.put("categories", category);
@@ -42,6 +41,16 @@ public class CategoryProductController {
 
     @PostMapping("")
     public ResponseEntity<?> saveCategoryProduct(@RequestBody ProductCategory productCategory) {
+
+//        Product product = productCategory.getProduct();
+//        Category category =  productCategory.getCategory();
+//
+//        if(product == null || category == null){
+//            return ResponseEntity.unprocessableEntity().build();
+//        }
+//
+
+
         ProductCategory saveProductCategory = categoryProductRepository.save(productCategory);
         return ResponseEntity.ok().body(saveProductCategory);
     }

@@ -5,6 +5,7 @@ import com.spring.onistore.exception.ResourceNotFoundException;
 import com.spring.onistore.repository.CategoryProductRepository;
 import com.spring.onistore.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,12 @@ public class CategoryController {
     private CategoryRepository categoryRepository;
 
     @GetMapping("")
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public ResponseEntity<List<Category>> getAllCategories() {
+        int count = categoryRepository.findAll().size();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Access-Control-Expose-Headers", "X-Total-Count");
+        httpHeaders.add("X-Total-Count", String.valueOf(count));
+        return ResponseEntity.ok().headers(httpHeaders).body(categoryRepository.findAll());
     }
 
     // Get products by category slug

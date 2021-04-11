@@ -19,6 +19,7 @@ public class ProductCategory {
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Category category;
 
     public long getId() {
