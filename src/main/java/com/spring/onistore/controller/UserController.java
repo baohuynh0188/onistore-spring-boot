@@ -44,6 +44,7 @@ public class UserController {
 
         newUser.setEmail(signUpDto.getEmail());
         newUser.setUserName(signUpDto.getUserName());
+        newUser.setAdmin(false);
         newUser.setEncryptedPassword(encoder().encode(signUpDto.getPassword()));
 
         userRepository.save(newUser);
@@ -81,7 +82,7 @@ public class UserController {
         return ResponseEntity.ok().body(message);
     }
 
-    @GetMapping("/roles")
+    @GetMapping("/auth")
     public ResponseEntity<?> roles() {
         HashMap<String, String> message = new HashMap<>();
         message.put("message", "Authorize");

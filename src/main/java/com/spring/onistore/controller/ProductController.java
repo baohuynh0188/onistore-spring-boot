@@ -1,7 +1,12 @@
 package com.spring.onistore.controller;
 
+import com.spring.onistore.dto.ProductCateDto;
+import com.spring.onistore.entity.Category;
 import com.spring.onistore.entity.Product;
+import com.spring.onistore.entity.ProductCategory;
 import com.spring.onistore.exception.ResourceNotFoundException;
+import com.spring.onistore.repository.CategoryProductRepository;
+import com.spring.onistore.repository.CategoryRepository;
 import com.spring.onistore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +28,12 @@ import static com.spring.onistore.util.Slugify.toSlug;
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryProductRepository categoryProductRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     // Show all products
     @GetMapping("")
@@ -49,12 +60,32 @@ public class ProductController {
         }
     }
 
+//    // Create one product
+//    @PostMapping("")
+//    public ResponseEntity<Product> createProduct(@Validated @RequestBody Product product) {
+//        product.setSlug(toSlug(product.getName()));
+//        Product saveProduct = productRepository.save(product);
+//        return ResponseEntity.ok().body(saveProduct);
+//    }
+
     // Create one product
     @PostMapping("")
-    public ResponseEntity<Product> createProduct(@Validated @RequestBody Product product) {
-        product.setSlug(toSlug(product.getName()));
-        Product saveProduct = productRepository.save(product);
-        return ResponseEntity.ok().body(saveProduct);
+    public ResponseEntity<ProductCategory> createProduct(@Validated @RequestBody ProductCateDto product) throws ResourceNotFoundException{
+        Product product1 = new Product();
+        product1.setSlug(toSlug(product.getName()));
+        product1.setName(product.getName());
+        product1.setDescription(product.getDescription());
+        product1.setPrice(product.getPrice());
+        product1.setFakePrice(product.getFakePrice());
+        product1.setQuantity(product.getQuantity());
+        Product saveProduct = productRepository.save(product1);
+        Category category = categoryRepository.findById(product.getCategoryID()).orElseThrow(() -> new ResourceNotFoundException("Cate not found"));
+        ProductCategory productCategory = new ProductCategory();
+        productCategory.setProduct(saveProduct);
+        productCategory.setCategory(category);
+        ProductCategory productCategorySave = categoryProductRepository.save(productCategory);
+
+        return ResponseEntity.ok().body(productCategorySave);
     }
 
     // Delete one product

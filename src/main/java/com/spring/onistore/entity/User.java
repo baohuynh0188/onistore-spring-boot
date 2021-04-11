@@ -27,7 +27,7 @@ public class User {
     @NotBlank
     private String userName;
 
-    @Column(name = "isAdmin", columnDefinition = "tinyint(1) default true")
+    @Column(name = "is_admin", columnDefinition = "tinyint(1) default false")
     private Boolean isAdmin;
 
     @Column(name = "encrypted_password", length = 128)
@@ -105,5 +105,13 @@ public class User {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 }
