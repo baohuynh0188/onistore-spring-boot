@@ -51,6 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/signin").permitAll().antMatchers(HttpMethod.GET, "/api/products")
                 .permitAll().antMatchers(HttpMethod.GET, "/api/products/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/admin/auth").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/images").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/roles").hasAnyAuthority("USER, ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/categories").permitAll().anyRequest().authenticated().and().cors()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()

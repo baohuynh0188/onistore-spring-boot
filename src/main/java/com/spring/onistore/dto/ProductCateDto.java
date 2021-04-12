@@ -1,16 +1,6 @@
 package com.spring.onistore.dto;
-
-import com.spring.onistore.entity.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 public class ProductCateDto implements Serializable{
     private Long id;
@@ -28,6 +18,8 @@ public class ProductCateDto implements Serializable{
     private Long categoryID;
 
     private String slug;
+
+    private String image;
 
     private Date createdAt;
 
@@ -111,5 +103,13 @@ public class ProductCateDto implements Serializable{
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

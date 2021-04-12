@@ -1,9 +1,10 @@
 package com.spring.onistore.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDetailsDto {
+public class OrderDetailsDto implements Serializable {
 
     private List<ProductCheckOutDto> productCheckOutDtoList = new ArrayList<>();
 

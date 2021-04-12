@@ -2,11 +2,13 @@ package com.spring.onistore.controller;
 
 import com.spring.onistore.dto.ProductCateDto;
 import com.spring.onistore.entity.Category;
+import com.spring.onistore.entity.Image;
 import com.spring.onistore.entity.Product;
 import com.spring.onistore.entity.ProductCategory;
 import com.spring.onistore.exception.ResourceNotFoundException;
 import com.spring.onistore.repository.CategoryProductRepository;
 import com.spring.onistore.repository.CategoryRepository;
+import com.spring.onistore.repository.ImageRepository;
 import com.spring.onistore.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -35,6 +37,9 @@ public class ProductController {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ImageRepository imageRepository;
+
     // Show all products
     @GetMapping("")
     @CrossOrigin("http://localhost:3006")
@@ -60,17 +65,9 @@ public class ProductController {
         }
     }
 
-//    // Create one product
-//    @PostMapping("")
-//    public ResponseEntity<Product> createProduct(@Validated @RequestBody Product product) {
-//        product.setSlug(toSlug(product.getName()));
-//        Product saveProduct = productRepository.save(product);
-//        return ResponseEntity.ok().body(saveProduct);
-//    }
-
     // Create one product
     @PostMapping("")
-    public ResponseEntity<ProductCategory> createProduct(@Validated @RequestBody ProductCateDto product) throws ResourceNotFoundException{
+    public Map<String, String> createProduct(@Validated @RequestBody ProductCateDto product) throws ResourceNotFoundException{
         Product product1 = new Product();
         product1.setSlug(toSlug(product.getName()));
         product1.setName(product.getName());
@@ -79,13 +76,20 @@ public class ProductController {
         product1.setFakePrice(product.getFakePrice());
         product1.setQuantity(product.getQuantity());
         Product saveProduct = productRepository.save(product1);
+        if (product.getImage() != null) {
+            Image image = new Image();
+            image.setUrl(product.getImage());
+            image.setProduct(saveProduct);
+            imageRepository.save(image);
+        }
         Category category = categoryRepository.findById(product.getCategoryID()).orElseThrow(() -> new ResourceNotFoundException("Cate not found"));
         ProductCategory productCategory = new ProductCategory();
         productCategory.setProduct(saveProduct);
         productCategory.setCategory(category);
         ProductCategory productCategorySave = categoryProductRepository.save(productCategory);
-
-        return ResponseEntity.ok().body(productCategorySave);
+        Map<String, String> map = new HashMap<>();
+        map.put("message", "Add product successfully");
+        return map;
     }
 
     // Delete one product
