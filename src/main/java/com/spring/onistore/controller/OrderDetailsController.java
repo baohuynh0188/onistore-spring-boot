@@ -77,7 +77,6 @@ public class OrderDetailsController {
             if(productCheckOutDto.getAmount() > productCheckOutDto.getProductCustomDto().getQuantity()   ){
                 return ResponseEntity.unprocessableEntity().build();
             }else{
-
                 Product p = productRepository.getOne(productCheckOutDto.getProductCustomDto().getId());
                 p.setQuantity(productCheckOutDto.getProductCustomDto().getQuantity() - productCheckOutDto.getAmount());
                 productRepository.save(p);

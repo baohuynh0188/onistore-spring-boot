@@ -42,7 +42,7 @@ public class Product {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<ProductCategory> productCategories;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
